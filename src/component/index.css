@@ -1,0 +1,18 @@
+.root {
+  padding: 5rem;
+}
+
+.table {
+  margin: 0 20px;
+  margin-top: 5rem;
+}
+
+.dialog {
+  position: fixed;
+  bottom: 50px;
+  right: 15%;
+  width: 50;
+  border: 1px solid;
+  z-index: 5;
+  background-color: #d4d4d4;
+}

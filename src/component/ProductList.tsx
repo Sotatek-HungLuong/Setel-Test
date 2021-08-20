@@ -11,8 +11,9 @@ interface Order {
 }
 
 interface Props {
-  products: Product[];
-  sum: number
+  products: Product[] | undefined;
+  sum?: number
+  onDelete?: (id: number) => void;
 }
 
 export default class ProductList extends React.Component<Props, Order> {
@@ -23,12 +24,15 @@ export default class ProductList extends React.Component<Props, Order> {
     }
   }
 
-  onDeleteProduct(e: React.MouseEvent<HTMLButtonElement> ) {
+  onDeleteProduct(id: number) {
+    this.props.onDelete && this.props.onDelete(id)
   }
-
+  componentDidMount() {
+    console.log(this.props)
+  }
   render() {
     return (
-      <table className="table">
+      <table className = "w3-table w3-bordered table w3-striped">
         <tr>
           <th>Name</th>
           <th>Description</th>
@@ -36,17 +40,17 @@ export default class ProductList extends React.Component<Props, Order> {
           <th>Volume</th>
           <th>Money</th>
         </tr>
-        {
-          this.props.products.map((prod) => {
+        {this.props.products &&
+          this.props.products.map((prod, index) => {
             let money = prod.vol * prod.price;
             return (
-              <tr>
+              <tr key={index}>
                 <td>{prod.name}</td>
                 <td>{prod.description}</td>
                 <td>{prod.price}</td>
                 <td>{prod.vol}</td>
                 <td>{money}</td>
-                <span className="pull-right text-uppercase delete-button" onClick={this.onDeleteProduct}>&times;</span>
+                <span className="pull-right text-uppercase delete-button" onClick={() => { this.onDeleteProduct(index) }}>&times;</span>
               </tr>
             )
           })
